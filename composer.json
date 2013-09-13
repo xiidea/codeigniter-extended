@@ -1,0 +1,96 @@
+{
+    "name": "xiidea/cix",
+    "license": "MIT",
+    "keywords": ["Codeigniter", "MY_Model", "ezRbac", "Enhanced", "Twig"],
+    "authors": [
+        {
+            "name": "Roni Saha",
+            "email": "roni@xiidea.net",
+            "homepage": "http://www.helpful-roni.com",
+            "role": "Developer"
+        }
+    ],
+    "type": "project",
+    "description": "Codeigniter Extended, Codeigniter's Enhanced Distribution for fast application start!",
+    "autoload": {
+        "psr-0": {
+            "Xiidea\\": ["src/libs"]
+        }
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "ellislab/codeigniter",
+                "version": "2.1-stable",
+                "dist": {
+                    "url": "https://github.com/EllisLab/CodeIgniter/archive/2.1-stable.zip",
+                    "type": "zip"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "xiidea/ezRbac",
+                "version": "dev-stable",
+                "type": "codeigniter-third-party",
+                "require": {
+                    "composer/installers": "*"
+                },
+                "dist": {
+                    "url": "https://github.com/xiidea/ezRbac/archive/dev-stable.zip",
+                    "type": "zip"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "xiidea/MY_Model",
+                "version": "dev-stable",
+                "dist": {
+                    "url": "https://github.com/ronisaha/MY_Model/archive/master.zip",
+                    "type": "zip"
+                },
+                "scripts": {
+                    "post-install-cmd": ["Xiidea\\Installer\\EzRbac::postInstall"],
+                    "post-update-cmd": ["Xiidea\\Installer\\EzRbac::postUpdate"]
+                },
+                "autoload": {
+                    "classmap": ["MY_Model.php"]
+                }
+            }
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "ellislab/codeigniter": "2.1-stable",
+        "twig/twig": "1.*",
+        "swiftmailer/swiftmailer": "v5.0.1",
+        "xiidea/ezRbac": "dev-stable",
+        "xiidea/MY_Model": "dev-stable"
+    },
+
+    "scripts": {
+        "pre-install-cmd": ["Xiidea\\Installer\\Manager::preInstall"],
+        "pre-update-cmd": ["Xiidea\\Installer\\Manager::preUpdate"],
+        "post-install-cmd": ["Xiidea\\Installer\\Manager::postInstall"],
+        "post-update-cmd": ["Xiidea\\Installer\\Manager::postUpdate"]
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "localize-ready": true,
+        "ci-app-dir": "src/application",
+        "ci-package-name": "ellislab/codeigniter",
+        "ci-web-dir": "web",
+        "installer-paths": {
+            "src/application/third_party/{$name}": ["xiidea/ezRbac"]
+        }
+    },
+    "variables": {
+        "ci.package.name": "ellislab/codeigniter",
+        "ci.app.dir": "src/application",
+        "ci.web.dir": "web"
+    }
+}

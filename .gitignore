@@ -1,0 +1,24 @@
+# Bootstrap
+web/app.config.php
+
+# Project directories and files
+vendor/*
+src/*/logs/*
+src/*/cache/*
+src/*/third_party/ezRbac
+!src/*/logs/index.html
+!src/*/cache/.htaccess
+web/uploads/*
+web/*/cache/*
+
+# Configuration files
+src/*/config/database.php
+
+# IDE
+.idea
+.nbproject
+
+# OS
+.DS_Store
+Thumbs.db
+
