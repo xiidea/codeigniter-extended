@@ -25,7 +25,7 @@ There are some global variables available to use in the twig templates:
 
 * APPPATH - The path to the Application directory
 * DIRECTORY_SEPARATOR - The OS depended directory separator (\ or /)
-* __FILE__ - Current twig template path
+* \_\_FILE\__ - Current twig template path
 * SESSION - The session object
 * app.user - Current logged in user
 * app.session - Current user session
@@ -40,4 +40,4 @@ Here is the available list of CIX twig functions
 * anchor - alias for CI anchor function
 * logout_url - return logout url
 
-#For full Twig reference, visit [Twig Site](http://twig.sensiolabs.org/)
+*For full Twig reference, visit [Twig Site](http://twig.sensiolabs.org/)
