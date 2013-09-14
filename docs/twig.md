@@ -19,7 +19,29 @@ The Twig template is configurable throw a config variable. Set <code>$config['tw
 -----------------
 You can access the Twig instance from your controller by $this->twig();
 
-5. CIX Twig Global Variables:
+5. Create Twig Extension
+-------------------------
+You can create you own extension following the twig [guideline](http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension). You can put the extension in the application/library directory or in your own library bundle created in the src/libs directory using Name space.
+Then you can register the extension in two way. You can register as with global instance or you can register on demand.
+To register with global twig instance you need to do following things:
+* Add it to the configuration file. <code>$config['twig_extensions'] = array('your_extension_with_full_name_space');</code> at **{APPDIR}/config/config.php**
+* define constructor in your extension with a parameter that expect CI_Controller Object (optional, but this way you will get access to the controller object from your extension)
+```php
+    public function __construct(\CI_Controller $ci)
+    {
+
+    }
+```
+
+You can also register twig extension whenever you need by using the Twig instance.
+
+```php
+
+$this->twig()->addExtension(new Your_Twig_Extension());
+
+```
+
+6. CIX Twig Global Variables:
 -------------------------
 There are some global variables available to use in the twig templates:
 
@@ -30,7 +52,7 @@ There are some global variables available to use in the twig templates:
 * app.user - Current logged in user
 * app.session - Current user session
 
-6. CIX Twig functions:
+7. CIX Twig functions:
 ----------------------
 You can call any global function from twig template just by call as member function of **fn** object. For an example, if you like to use **site_url()** function you can call it as <code>fn.site_url()</code>
 Besides that here is the available list of CIX twig functions you can use. More function will be added soon....

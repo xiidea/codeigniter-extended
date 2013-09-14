@@ -34,8 +34,13 @@ class Loader extends \Twig_Environment
 
     private function initCustomExtensions()
     {
-        $this->addExtension(new TwigCIXExtension($this->CI, $this));
+        $this->addExtension(new TwigCIXExtension($this->CI));
         $this->addExtension(new TwigEzRbacExtension($this->CI));
+
+        $extensions = $this->CI->config->item('twig_extensions');
+        foreach(array($extensions) as $extension){
+            $this->addExtension(new $extension($this->CI));
+        }
     }
 
     /**

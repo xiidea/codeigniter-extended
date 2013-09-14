@@ -14,7 +14,8 @@
     "description": "Codeigniter Extended, Codeigniter's Enhanced Distribution for fast application start!",
     "autoload": {
         "psr-0": {
-            "Xiidea\\": ["src/libs"]
+            "Xiidea\\": ["src/libs/Xiidea"],
+            "": ["src/libs", "src/application/libraries"]
         }
     },
     "repositories": [

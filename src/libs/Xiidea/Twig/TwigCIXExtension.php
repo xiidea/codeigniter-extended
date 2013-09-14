@@ -22,9 +22,24 @@ class TwigCIXExtension extends \Twig_Extension{
      */
     private $env;
 
-    public function __construct($ci, Loader $environment)
+    /**
+     * @var string
+     */
+    private $_controller_path;
+
+    public function __construct($ci)
     {
         $this->CI = $ci;
+    }
+
+    /**
+     * Initializes the runtime environment.
+     *
+     * This is where you can load some file that contains filter functions for instance.
+     *
+     * @param \Twig_Environment $environment The current Twig_Environment instance
+     */
+    public function initRuntime(\Twig_Environment $environment){
         $this->env = $environment;
     }
 
@@ -40,8 +55,12 @@ class TwigCIXExtension extends \Twig_Extension{
 
     private function getController()
     {
-        $reflector = new \ReflectionClass(get_class($this->CI));
-        return $reflector->getFileName();
+        if(!$this->_controller_path){
+            $reflector = new \ReflectionClass(get_class($this->CI));
+            $this->_controller_path = $reflector->getFileName();
+        }
+
+        return $this->_controller_path;
     }
 
     public function getName()

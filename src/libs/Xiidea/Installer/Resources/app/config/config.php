@@ -378,6 +378,16 @@ $config['enable_twig'] = FALSE;
 $config['twig_dir'] = 'twig';
 
 
+/*
+|--------------------------------------------------------------------------
+| Register Twig extension globally
+|--------------------------------------------------------------------------
+|
+| Enable this option to use the twig template engine.
+|
+*/
+$config['twig_extensions'] = array();
+
 
 
 /* End of file config.php */
