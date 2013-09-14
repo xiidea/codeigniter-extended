@@ -17,9 +17,15 @@ class TwigCIXExtension extends \Twig_Extension{
      */
     private $CI;
 
-    public function __construct($ci)
+    /**
+     * @var Loader
+     */
+    private $env;
+
+    public function __construct($ci, Loader $environment)
     {
         $this->CI = $ci;
+        $this->env = $environment;
     }
 
     public function getGlobals()
@@ -27,7 +33,15 @@ class TwigCIXExtension extends \Twig_Extension{
         return array(
             'APPPATH' => realpath(APPPATH),
             'DIRECTORY_SEPARATOR' => DIRECTORY_SEPARATOR,
+            'fn' => new Proxy($this->env),
+            'controller' => $this->getController(),
         );
+    }
+
+    private function getController()
+    {
+        $reflector = new \ReflectionClass(get_class($this->CI));
+        return $reflector->getFileName();
     }
 
     public function getName()

@@ -34,7 +34,7 @@ class Loader extends \Twig_Environment
 
     private function initCustomExtensions()
     {
-        $this->addExtension(new TwigCIXExtension($this->CI));
+        $this->addExtension(new TwigCIXExtension($this->CI, $this));
         $this->addExtension(new TwigEzRbacExtension($this->CI));
     }
 
@@ -58,11 +58,6 @@ class Loader extends \Twig_Environment
      */
     public function display($name, array $context = array())
     {
-        $name = $this->CI->getTwigTemplateName($name);
-        $context['__FILE__'] = $this->CI->getTwigPath($name);
-
-        $output = $this->loadTemplate($name)->render($context);
-
-        $this->CI->output->append_output($output);
+        $this->CI->output->append_output($this->render($name, $context));
     }
 }

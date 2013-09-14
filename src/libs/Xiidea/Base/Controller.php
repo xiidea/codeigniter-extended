@@ -152,7 +152,7 @@ class Controller extends \CI_Controller
     {
         $appendExtension = self::isTwigTemplate($template) ? "" : ".twig";
 
-        return $this->_twigPath . DIRECTORY_SEPARATOR . $template . $appendExtension;
+        return str_replace('/', DIRECTORY_SEPARATOR, $this->_twigPath . DIRECTORY_SEPARATOR . $template . $appendExtension);
     }
 
     public function getTwigTemplateName($template)

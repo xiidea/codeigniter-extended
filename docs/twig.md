@@ -28,11 +28,13 @@ There are some global variables available to use in the twig templates:
 * \_\_FILE\__ - Current twig template path
 * SESSION - The session object
 * app.user - Current logged in user
+* app.user - Current logged in user
 * app.session - Current user session
 
 6. CIX Twig functions:
 ----------------------
-Here is the available list of CIX twig functions
+You can call any global function from twig template just by call as member function of **fn** object. For an example, if you like to use **site_url()** function you can call it as <code>fn.site_url()</code>
+Besides that here is the available list of CIX twig functions you can use. More function will be added soon....
 
 * _t - localization translating function (will only work if your application is **localize-ready**)
 * nonce - Create a nonce variable

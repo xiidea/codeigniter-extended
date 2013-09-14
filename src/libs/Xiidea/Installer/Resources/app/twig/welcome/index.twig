@@ -72,10 +72,10 @@
         <p>{{ 'The page you are looking at is being generated dynamically by CodeIgniter.'|localize('site') }}</p>
 
         <p>{{ _t('If you would like to edit this page you\'ll find it located at:', 'site') }}</p>
-        <code>{{ __FILE__|replace('/', DIRECTORY_SEPARATOR) }}</code>
+        <code>{{ __FILE__ }}</code>
 
         <p>{{ _t('The corresponding controller for this page is found at:', 'site') }}</p>
-        <code>{{ APPPATH ~ '/controllers/welcome.php'|replace('/', DIRECTORY_SEPARATOR) }}</code>
+        <code>{{ controller }}</code>
 
         <p>{{  _t('If you are exploring CodeIgniter for the very first time, you should start by reading the', 'site') }}
             <a href="http://ellislab.com/codeigniter/user-guide/">User Guide</a>.</p>
