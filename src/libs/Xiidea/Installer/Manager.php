@@ -102,10 +102,19 @@ class Manager
 
         self::generateDatabaseSchema($appDirectory, $event);
 
-        $uploadDir = realpath($webDirectory) . DIRECTORY_SEPARATOR . "uploads";
+        $webDirectory = realpath($webDirectory) . DIRECTORY_SEPARATOR;
+
+        $uploadDir = $webDirectory . "uploads";
 
         if (!file_exists($uploadDir)) {
-            mkdir($uploadDir);
+            @mkdir($uploadDir);
+        }
+
+        foreach(array('js', 'css') as $dir){
+            $cacheDir = $webDirectory . "assets".DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR."cache";
+            if (!file_exists($cacheDir)) {
+                @mkdir($cacheDir);
+            }
         }
     }
 
