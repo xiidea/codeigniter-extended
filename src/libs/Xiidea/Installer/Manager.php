@@ -21,11 +21,6 @@ class Manager
         'swiftmailer/swiftmailer' => 'Swift Mailer'
     );
 
-    private static $msg = array(
-        'yes' => 'keep',
-        'no' => 'add',
-    );
-
     private static $twigInstalled = false;
     private static $newCopy = false;
     private static $environment = 'production';
@@ -51,11 +46,20 @@ class Manager
         self::updateRequiresLibraries($event);
     }
 
+    private static function getStatusKeyName($require)
+    {
+        if(!self::$requires[$require]){
+            return null;
+        }
+
+        return "use-".str_replace(' ', '-', strtolower(self::$requires[$require]));
+    }
+
     private static function updateRequiresLibraries(Event $event)
     {
         $package = $event->getComposer()->getPackage();
         $requiresList = $package->getRequires();
-        $io = $event->getIO();
+        $extras = $event->getComposer()->getPackage()->getExtra();
 
         foreach (self::$requires as $require => $label) {
             $installStatus = self::isInstalled($requiresList[$require]);
@@ -64,14 +68,10 @@ class Manager
                 self::$twigInstalled = $installStatus;
             }
 
-            $installStatusStr = $installStatus ? 'yes' : 'no';
 
-            $confirmQuestion = sprintf('Do you want to %s "%s" library to your application(yes,no)?[%s] :',
-                self::$msg[$installStatusStr], Colors::info($label), Colors::info($installStatusStr));
+            $statusKeyName = self::getStatusKeyName($require);
 
-            $answer = !$io->askConfirmation($confirmQuestion, $installStatus);
-
-            if ($answer) {
+            if ($statusKeyName && !($extras[$statusKeyName])) {
                 unset($requiresList[$require]);
             }
         }

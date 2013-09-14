@@ -79,8 +79,11 @@
         "post-update-cmd": ["Xiidea\\Installer\\Manager::postUpdate"]
     },
     "minimum-stability": "stable",
+    "bin-dir": "bin",
     "extra": {
         "localize-ready": true,
+        "use-twig": true,
+        "use-swift-mailer": true,
         "ci-app-dir": "src/application",
         "ci-package-name": "ellislab/codeigniter",
         "ci-web-dir": "web",

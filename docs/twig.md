@@ -5,10 +5,10 @@ Here some instruction to get best out of your twig template.
 
 1. Enable twig feature:
 -----------------------
-The CIX Installer will ask you weather or not you like to install Twig for your application. If you chose no, don't worry, you can install it again just by running <code>composer update</code> or <code>composer install</code>
+If initially you chose not to use twig, don't worry, you can install it again just by running <code>composer update twig/twig</code> after enabling the use-twig value in your composer file
 
-2. Disable Twig:
------------------
+2. Disable Twig Temporarily:
+---------------------------
 If you have installed but do not want to use the twig for some reason, you can temporarily disable the twig. To do so just set <code>$config['enable_twig'] = FALSE;</code> at **{APPDIR}/config/config.php**.
 
 3. Twig template location:

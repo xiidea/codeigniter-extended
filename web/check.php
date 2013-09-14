@@ -58,7 +58,7 @@ $minorProblems = $cixRequirements->getFailedRecommendations();
                         <?php if (count($minorProblems)): ?>
                             <h2>Recommendations</h2>
                             <p>
-                                <?php if (count($majorProblems)): ?>Additionally, to<?php else: ?>To<?php endif; ?> enhance your Codeigniter experience,
+                                <?php if (count($majorProblems)): ?>Additionally, to<?php else: ?>To<?php endif; ?> enhance your CIX experience,
                                 it’s recommended that you fix the following:
                             </p>
                             <ol>
@@ -87,7 +87,7 @@ $minorProblems = $cixRequirements->getFailedRecommendations();
                                 <li><a href="./">Take me to the Welcome page</a></li>
                             <?php endif; ?>
                             <?php if (count($majorProblems) || count($minorProblems)): ?>
-                                <li><a href="config.php">Re-check configuration</a></li>
+                                <li><a href="check.php">Re-check configuration</a></li>
                             <?php endif; ?>
                         </ul>
                     </div>

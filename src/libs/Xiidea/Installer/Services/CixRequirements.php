@@ -469,18 +469,18 @@ class CixRequirements extends RequirementCollection
 
         $directoryExist = is_dir($webPath . '/assets/css/cache') ? "" : "Please Create and";
 
-        $this->addRecommendation(
+        $this->addRequirement(
             is_writable($webPath.'/assets/css/cache'),
             "$webRoot/assets/css/cache directory must be writable",
             "$directoryExist Change the permissions of the \"<strong>$webRoot/assets/css/cache</strong>\" directory so that the web server can write into it."
         );
 
-        $directoryExist = is_dir($webPath . '/assets/css/cache') ? "" : "Please Create and";
+        $directoryExist = is_dir($webPath . '/assets/js/cache') ? "" : "Please Create and";
 
-        $this->addRecommendation(
+        $this->addRequirement(
             is_writable($webPath.'/assets/js/cache'),
             "$webRoot/assets/js/cache directory must be writable",
-            "$directoryExist Change the permissions of the \"<strong>$webRoot/assets/css/cache</strong>\" directory so that the web server can write into it."
+            "$directoryExist Change the permissions of the \"<strong>$webRoot/assets/js/cache</strong>\" directory so that the web server can write into it."
         );
 
         $this->addPhpIniRequirement(
