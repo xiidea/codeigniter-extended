@@ -26,8 +26,7 @@ There are some global variables available to use in the twig templates:
 * APPPATH - The path to the Application directory
 * DIRECTORY_SEPARATOR - The OS depended directory separator (\ or /)
 * \_\_FILE\__ - Current twig template path
-* SESSION - The session object
-* app.user - Current logged in user
+* controller - The current controller path
 * app.user - Current logged in user
 * app.session - Current user session
 
