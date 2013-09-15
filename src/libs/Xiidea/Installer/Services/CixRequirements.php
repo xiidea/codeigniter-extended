@@ -437,51 +437,17 @@ class CixRequirements extends RequirementCollection
 
 
         if(is_dir($applicationDir)){
-
-            $directoryExist = is_dir($applicationDir . '/cache') ? "" : "Please Create and";
-
-            $this->addRequirement(
-                is_writable($applicationDir.'/cache'),
-                "$baseDir/cache/ directory must be writable",
-                "$directoryExist Change the permissions of the \"<strong>$baseDir/cache/</strong>\" directory so that the web server can write into it."
-            );
-
-            $directoryExist = is_dir($applicationDir . '/log') ? "" : "Please Create and";
-
-            $this->addRequirement(
-                is_writable($applicationDir.'/logs'),
-                "$baseDir/logs/ directory must be writable",
-                "$directoryExist Change the permissions of the \"<strong>$baseDir/logs/</strong>\" directory so that the web server can write into it."
-            );
+            $this->addDirectoryRequirement($baseDir, $applicationDir, '/cache');
+            $this->addDirectoryRequirement($baseDir, $applicationDir, '/logs');
         }
 
         $webRoot = $json->extra->{"ci-web-dir"};
 
         $webPath = $projectBaseDir . "/" . $webRoot;
 
-        $directoryExist = is_dir($webPath . '/uploads') ? "" : "Please Create and";
-
-        $this->addRequirement(
-            is_writable($webPath.'/uploads'),
-            "$webRoot/uploads/ directory must be writable",
-            "$directoryExist Change the permissions of the \"<strong>$webRoot/uploads/</strong>\" directory so that the web server can write into it."
-        );
-
-        $directoryExist = is_dir($webPath . '/assets/css/cache') ? "" : "Please Create and";
-
-        $this->addRequirement(
-            is_writable($webPath.'/assets/css/cache'),
-            "$webRoot/assets/css/cache directory must be writable",
-            "$directoryExist Change the permissions of the \"<strong>$webRoot/assets/css/cache</strong>\" directory so that the web server can write into it."
-        );
-
-        $directoryExist = is_dir($webPath . '/assets/js/cache') ? "" : "Please Create and";
-
-        $this->addRequirement(
-            is_writable($webPath.'/assets/js/cache'),
-            "$webRoot/assets/js/cache directory must be writable",
-            "$directoryExist Change the permissions of the \"<strong>$webRoot/assets/js/cache</strong>\" directory so that the web server can write into it."
-        );
+        $this->addDirectoryRequirement($webRoot, $webPath, '/uploads');
+        $this->addDirectoryRequirement($webRoot, $webPath,  '/assets/css/cache');
+        $this->addDirectoryRequirement($webRoot, $webPath,  '/assets/js/cache');
 
         $this->addPhpIniRequirement(
             'date.timezone', true, false,
@@ -582,5 +548,16 @@ class CixRequirements extends RequirementCollection
         $this->addPhpIniRecommendation('register_globals', false, true);
 
         $this->addPhpIniRecommendation('session.auto_start', false);
+    }
+
+    private function addDirectoryRequirement($baseDir, $basePath, $dir)
+    {
+        $directoryExist = is_dir($basePath . $dir) ? "" : "Please Create and";
+
+        $this->addRequirement(
+            is_writable($basePath . $dir),
+            "$baseDir{$dir}/ directory must be writable",
+            "$directoryExist Change the permissions of the \"<strong>{$baseDir}$dir/</strong>\" directory so that the web server can write into it."
+        );
     }
 }
