@@ -21,7 +21,6 @@ class Manager
         'swiftmailer/swiftmailer' => 'Swift Mailer'
     );
 
-    private static $twigInstalled = false;
     private static $newCopy = false;
     private static $environment = 'production';
     private static $validEnvironments = array('production', 'development', 'testing');
@@ -62,12 +61,6 @@ class Manager
         $extras = $event->getComposer()->getPackage()->getExtra();
 
         foreach (self::$requires as $require => $label) {
-            $installStatus = self::isInstalled($requiresList[$require]);
-
-            if($require == 'twig/twig'){
-                self::$twigInstalled = $installStatus;
-            }
-
 
             $statusKeyName = self::getStatusKeyName($require);
 
@@ -77,11 +70,6 @@ class Manager
         }
 
         $package->setRequires($requiresList);
-    }
-
-    private static function isInstalled($link)
-    {
-        return file_exists("vendor/" . $link->getTarget());
     }
 
     private static function configureEnvironment($event)
@@ -94,7 +82,7 @@ class Manager
         $ciBasePath = 'vendor/' . $extras['ci-package-name'];
 
         self::copyAppDir($ciBasePath, $appDirectory);
-        self::writeConfig($event, $appDirectory);
+        self::writeConfig($event, $appDirectory, $extras);
         self::buildBootstrap($event, $bootstrap, $extras, $webDirectory, $ciBasePath);
 
         CoreLibrary::manage($event, $extras, self::$newCopy);
@@ -219,13 +207,14 @@ class Manager
         }
     }
 
-    private static function writeConfig($event, $appDirectory)
+    private static function writeConfig($event, $appDirectory, $extras)
     {
         $configFile = $appDirectory . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . 'config.php';
 
-        $twigInstalled = self::getConfigValue($configFile, 'enable_twig');
+        $configEnableTwig = self::getConfigValue($configFile, 'enable_twig');
 
-        if(false or self::$twigInstalled == $twigInstalled){
+
+        if($extras['use-twig'] == $configEnableTwig){
             return;
         }
 
@@ -237,7 +226,7 @@ class Manager
 
         $configFileData = file_get_contents($configFile);
         $searchPattern = '/(enable_twig\\' . "'" . '[\]\s=]*)([truefalseTRUEFALSE]{4,5})/';
-        $replacement = '${1}' . (self::$twigInstalled ? 'TRUE' : 'FALSE');
+        $replacement = '${1}' . ($extras['use-twig'] ? 'TRUE' : 'FALSE');
 
         $configFileData = preg_replace($searchPattern, $replacement, $configFileData);
         file_put_contents($configFile, $configFileData);
