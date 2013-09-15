@@ -54,10 +54,6 @@
                     "url": "https://github.com/ronisaha/MY_Model/archive/master.zip",
                     "type": "zip"
                 },
-                "scripts": {
-                    "post-install-cmd": ["Xiidea\\Installer\\EzRbac::postInstall"],
-                    "post-update-cmd": ["Xiidea\\Installer\\EzRbac::postUpdate"]
-                },
                 "autoload": {
                     "classmap": ["MY_Model.php"]
                 }
@@ -80,7 +76,9 @@
         "post-update-cmd": ["Xiidea\\Installer\\Manager::postUpdate"]
     },
     "minimum-stability": "stable",
-    "bin-dir": "bin",
+    "config":{
+        "bin-dir": "bin"
+    },
     "extra": {
         "localize-ready": true,
         "use-twig": true,
