@@ -38,7 +38,13 @@ class Loader extends \Twig_Environment
         $this->addExtension(new TwigEzRbacExtension($this->CI));
 
         $extensions = $this->CI->config->item('twig_extensions');
+        
         foreach(array($extensions) as $extension){
+            
+            if(empty($extension)){
+                continue;
+            }
+            
             $this->addExtension(new $extension($this->CI));
         }
     }
