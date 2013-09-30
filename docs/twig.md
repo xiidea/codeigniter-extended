@@ -54,13 +54,12 @@ There are some global variables available to use in the twig templates:
 
 7. CIX Twig functions:
 ----------------------
-You can call any global function from twig template just by call as member function of **fn** object. For an example, if you like to use **site_url()** function you can call it as <code>fn.site_url()</code>
+You can call any global function from twig template just by call the function prefixed with php_. For an example, if you like to use **site_url()** function you can call it as <code>php_site_url()</code>
 Besides that here is the available list of CIX twig functions you can use. More function will be added soon....
 
 * _t - localization translating function (will only work if your application is **localize-ready**)
 * nonce - Create a nonce variable
 * valid_nonce - validate nonce value
-* anchor - alias for CI anchor function
 * logout_url - return logout url
 
 *For full Twig reference, visit [Twig Site](http://twig.sensiolabs.org/)

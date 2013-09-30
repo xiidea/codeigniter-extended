@@ -48,7 +48,6 @@ class TwigCIXExtension extends \Twig_Extension{
         return array(
             'APPPATH' => realpath(APPPATH),
             'DIRECTORY_SEPARATOR' => DIRECTORY_SEPARATOR,
-            'fn' => new Proxy($this->env),
             'controller' => $this->getController(),
         );
     }
@@ -74,8 +73,46 @@ class TwigCIXExtension extends \Twig_Extension{
             new \Twig_SimpleFunction('_t', '_t'),
             new \Twig_SimpleFunction('nonce', 'nonce'),
             new \Twig_SimpleFunction('valid_nonce', 'valid_nonce'),
-            new \Twig_SimpleFunction('anchor', 'anchor', array('is_safe' => array('html')))
+            new \Twig_SimpleFunction('php_*', array($this,'phpFunctions'),array('is_safe' => array('html'))),
         );
+    }
+
+    public function phpFunctions()
+    {
+        $arg_list = func_get_args();
+        $function = array_shift($arg_list);
+
+        if(is_callable($function)){
+            return call_user_func_array($function, $arg_list);
+        }
+
+        if(!$this->env->isDebug()){
+            return null;
+        }
+
+        $trace = debug_backtrace(null, 2);
+
+        $debugInfo = $this->getDebugInfo($trace);
+
+        $errMsg = 'Called to an undefined function : <b>php_' . $function . "</b> ";
+
+        if(isset($debugInfo['file'], $debugInfo['line'])){
+            _exception_handler(E_USER_NOTICE, $errMsg, $debugInfo['file'], $debugInfo['line']);
+        }else{
+            trigger_error($errMsg, E_USER_NOTICE);
+        }
+
+        return NULL;
+    }
+
+    protected function getDebugInfo($trace)
+    {
+        $class = $trace[1]['class'];
+        $obj = new $class($this->env);
+        $return['file'] = $obj->getTemplateName();
+        $debugInfo = $obj->getDebugInfo();
+        $return['line'] = $debugInfo[$trace[0]['line']-1];
+        return $return;
     }
 
     /**
