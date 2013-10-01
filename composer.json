@@ -29,35 +29,6 @@
                     "type": "zip"
                 }
             }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "xiidea/ezRbac",
-                "version": "dev-stable",
-                "type": "codeigniter-third-party",
-                "require": {
-                    "composer/installers": "*"
-                },
-                "dist": {
-                    "url": "https://github.com/xiidea/ezRbac/archive/dev-stable.zip",
-                    "type": "zip"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "xiidea/MY_Model",
-                "version": "dev-stable",
-                "dist": {
-                    "url": "https://github.com/ronisaha/MY_Model/archive/master.zip",
-                    "type": "zip"
-                },
-                "autoload": {
-                    "classmap": ["MY_Model.php"]
-                }
-            }
         }
     ],
     "require": {
@@ -65,8 +36,8 @@
         "ellislab/codeigniter": "2.1-stable",
         "twig/twig": "1.*",
         "swiftmailer/swiftmailer": "v5.0.1",
-        "xiidea/ezRbac": "dev-stable",
-        "xiidea/MY_Model": "dev-stable"
+        "xiidea/ezrbac": "1.2.*@dev",
+        "xiidea/my-model": "dev-master"
     },
 
     "scripts": {
@@ -87,7 +58,7 @@
         "ci-package-name": "ellislab/codeigniter",
         "ci-web-dir": "web",
         "installer-paths": {
-            "src/application/third_party/{$name}": ["xiidea/ezRbac"]
+            "src/application/third_party/{$name}": ["type:codeigniter-third-party"]
         },
         "branch-alias": {
             "dev-master": "0.1.x-dev"
