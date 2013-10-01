@@ -1,7 +1,7 @@
 {
-    "name": "xiidea/cix",
+    "name": "xiidea/codeIgniter-extended",
     "license": "MIT",
-    "keywords": ["Codeigniter", "MY_Model", "ezRbac", "Enhanced", "Twig"],
+    "keywords": ["Codeigniter", "MY_Model", "ezRbac", "Extended", "Enhanced", "Twig"],
     "authors": [
         {
             "name": "Roni Saha",
@@ -75,7 +75,7 @@
         "post-install-cmd": ["Xiidea\\Installer\\Manager::postInstall"],
         "post-update-cmd": ["Xiidea\\Installer\\Manager::postUpdate"]
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "config":{
         "bin-dir": "bin"
     },
@@ -88,6 +88,9 @@
         "ci-web-dir": "web",
         "installer-paths": {
             "src/application/third_party/{$name}": ["xiidea/ezRbac"]
+        },
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
         }
     },
     "variables": {
