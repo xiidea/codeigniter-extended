@@ -54,8 +54,7 @@ Create a virtualhost setting the document root pointing to /path/of/web-root dir
 
 The default user to access to the private zone is:
 
-    user: 		admin@admin.com
-
+    user: 		admin@admin.com  
     password: 	123456
 
 
@@ -91,7 +90,8 @@ It comes pre-configured with the following libraries:
 
   * Enhanced Language Library(gettext localization implementation)
 
-  * JS/CSS Minifier. you can use (<code>assets/css/mini.php?files=file1,file2</code> and <code>assets/js/mini.php?files=file1,file2</code>) or (<code>assets/css/file1,file2,file3.css</code> and <code>assets/js/file1,file2.js</code> with rewrite enable)
+  * JS/CSS Minifier. you can use (<code>assets/css/mini.php?files=file1,file2</code> and <code>assets/js/mini.php?files=file1,file2</code>)   
+    or (<code>assets/css/file1,file2,file3.css</code> and <code>assets/js/file1,file2.js</code> with rewrite enable)
 
 
 Enjoy!
