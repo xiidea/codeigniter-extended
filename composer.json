@@ -37,7 +37,7 @@
         "twig/twig": "1.*",
         "swiftmailer/swiftmailer": "v5.0.1",
         "xiidea/ezrbac": "1.2.*@dev",
-        "xiidea/my-model": "dev-master"
+        "xiidea/ci-base-model": "2.0.*"
     },
 
     "scripts": {
