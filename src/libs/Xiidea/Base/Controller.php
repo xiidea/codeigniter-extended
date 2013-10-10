@@ -191,8 +191,12 @@ class Controller extends \CI_Controller
         return substr(strrchr($template, '.'), 1) == 'twig';
     }
 
-    public function getTwigPath($template)
+    public function getTwigPath($template = null)
     {
+        if ($template == null){
+            return $this->_twigPath;
+        }
+
         $appendExtension = self::isTwigTemplate($template) ? "" : ".twig";
 
         return str_replace('/', DIRECTORY_SEPARATOR, $this->_twigPath . DIRECTORY_SEPARATOR . $template . $appendExtension);

@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+umask(0000);
+
+set_time_limit(0);
+
+require_once __DIR__.'/app/bootstrap.php';
+
+use Symfony\Component\Console\Input\ArgvInput;
+use Xiidea\Helper\ConfigResolver;
+
+$input = new ArgvInput();
+$env = $input->getParameterOption(array('--env', '-e'));
+
+$kernel = new ConfigResolver($env);
+$application = new CixApplication($kernel);
+$application->addCommands(CommandRegistry($kernel));
+$application->run($input);

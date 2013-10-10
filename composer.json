@@ -37,7 +37,9 @@
         "twig/twig": "1.*",
         "swiftmailer/swiftmailer": "v5.0.1",
         "xiidea/ezrbac": "1.2.*@dev",
-        "xiidea/ci-base-model": "2.0.*"
+        "xiidea/ci-base-model": "2.0.*",
+        "kriswallsmith/assetic": "1.2.*@dev",
+        "symfony/console": "2.4.*@dev"
     },
 
     "scripts": {

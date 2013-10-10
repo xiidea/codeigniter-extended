@@ -48,6 +48,10 @@ class Lang extends \CI_Lang {
             $url_ok = true;
         }
 
+        if(!isset($_SERVER['HTTP_HOST'])){
+            return;
+        }
+
         if ((!$url_ok) && (!$this->is_special($uri_segment['parts'][0]))) // special URI -> no redirect
         {
             // set default language

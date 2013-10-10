@@ -85,4 +85,45 @@ class Filesystem {
 
         return $path;
     }
+
+    /**
+     * @param string $d directory to search
+     * @param string $pre prepend the directory name to form unique controller name
+     * @param string $ext
+     * @return array
+     */
+    public static function scanForController($d="",$pre="", $ext = 'twig'){
+        $files = array();
+        $dir=array();
+        $more_files=array();
+        foreach (new \DirectoryIterator($d) as $file) {
+            if($file->isDir()){
+                if(!$file->isDot()){
+                    $dir[] =(string) $file;
+                }
+            }else{
+                (preg_match('/^.*\.('.$ext.')$/i', $file)) AND $files[] = "$pre".$file->getFilename();
+            }
+        }
+        if(!empty($dir)){
+            foreach($dir as $dname){
+                $more_files= array_merge(self::scanForController($d.DIRECTORY_SEPARATOR.$dname,"$dname/", $ext),$more_files);
+            }
+
+        }
+        return array_merge($files,$more_files);
+    }
+
+    public static function fileLocator($file =null, $maxDepth = 10, $currentDir = ".")
+    {
+        if(empty($file)){
+            return false;
+        }elseif(file_exists($currentDir . "/$file")){
+            return $currentDir;
+        }elseif(--$maxDepth){
+            return self::fileLocator($file, $maxDepth, $currentDir . "/..");
+        }else{
+            return false;
+        }
+    }
 }

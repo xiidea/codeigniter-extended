@@ -8,6 +8,8 @@
 namespace Xiidea\Twig;
 
 
+use Assetic\Extension\Twig\AsseticExtension;
+use Assetic\Factory\AssetFactory;
 use Xiidea\Base\Controller;
 
 class Loader extends \Twig_Environment
@@ -17,6 +19,8 @@ class Loader extends \Twig_Environment
      * @var Controller
      */
     private $CI;
+    private $assetsDir;
+    private $assetFactory;
 
     public function __construct(\Twig_LoaderInterface $loader = NULL, $options = array())
     {
@@ -24,29 +28,40 @@ class Loader extends \Twig_Environment
 
         $this->CI = & get_instance();
 
-        if(isset($options['debug']) && $options['debug']){
+        if (isset($options['debug']) && $options['debug']) {
             $this->addExtension(new \Twig_Extension_Debug());
         }
 
-        $this->initCustomExtensions();
+        $this->assetsDir = rtrim(FCPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR;
+        $this->assetFactory = new AssetFactory($this->assetsDir, $this->isDebug());
 
+        $this->initCustomExtensions();
     }
 
     private function initCustomExtensions()
     {
         $this->addExtension(new TwigCIXExtension($this->CI));
         $this->addExtension(new TwigEzRbacExtension($this->CI));
+        $this->addExtension(new AsseticExtension($this->assetFactory));
 
         $extensions = $this->CI->config->item('twig_extensions');
-        
-        foreach(array($extensions) as $extension){
-            
-            if(empty($extension)){
+
+        foreach (array($extensions) as $extension) {
+            if (empty($extension)) {
                 continue;
             }
-            
             $this->addExtension(new $extension($this->CI));
         }
+    }
+
+    /**
+     * Displays a template.
+     *
+     * {@inheritdoc }
+     */
+    public function display($name, array $context = array())
+    {
+        $this->CI->output->append_output($this->render($name, $context));
     }
 
     /**
@@ -63,12 +78,18 @@ class Loader extends \Twig_Environment
     }
 
     /**
-     * Displays a template.
-     *
-     * {@inheritdoc }
+     * @return string
      */
-    public function display($name, array $context = array())
+    public function getAssetsDir()
     {
-        $this->CI->output->append_output($this->render($name, $context));
+        return $this->assetsDir;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAssetFactory()
+    {
+        return $this->assetFactory;
     }
 }
