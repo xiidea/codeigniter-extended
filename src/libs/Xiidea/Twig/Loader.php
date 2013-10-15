@@ -21,18 +21,21 @@ class Loader extends \Twig_Environment
     private $CI;
     private $assetsDir;
     private $assetFactory;
+    private $_extensions;
 
-    public function __construct(\Twig_LoaderInterface $loader = NULL, $options = array())
+    public function __construct(\Twig_LoaderInterface $loader = NULL, $options = array(), $ci = null, $extensions = array())
     {
         parent::__construct($loader, $options);
 
-        $this->CI = & get_instance();
+        $this->CI = $ci == null ? get_instance() : $ci;
+
+        $this->_extensions = $extensions;
 
         if (isset($options['debug']) && $options['debug']) {
             $this->addExtension(new \Twig_Extension_Debug());
         }
 
-        $this->assetsDir = rtrim(FCPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR;
+        $this->assetsDir = rtrim('', DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR;
         $this->assetFactory = new AssetFactory($this->assetsDir, $this->isDebug());
 
         $this->initCustomExtensions();
@@ -44,9 +47,7 @@ class Loader extends \Twig_Environment
         $this->addExtension(new TwigEzRbacExtension($this->CI));
         $this->addExtension(new AsseticExtension($this->assetFactory));
 
-        $extensions = $this->CI->config->item('twig_extensions');
-
-        foreach (array($extensions) as $extension) {
+        foreach (array($this->_extensions) as $extension) {
             if (empty($extension)) {
                 continue;
             }

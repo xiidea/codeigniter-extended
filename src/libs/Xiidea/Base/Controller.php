@@ -172,12 +172,14 @@ class Controller extends \CI_Controller
 
             $this->_twigPath = realpath($templatesPath);
 
+            $extensions = $this->config->item('twig_extensions');
+
             if (class_exists('\Twig_Loader_Filesystem')) {
                 $loader = new \Twig_Loader_Filesystem($templatesPath);
                 $this->_twig = new Loader($loader, array(
                                                     'debug' => ENVIRONMENT != 'production',
                                                     'cache' => APPPATH . 'cache'
-                                                    ));
+                                                    ), $this, $extensions);
             } else {
                 show_error('Twig is not installed. Install Twig first by run the command "composer update twig/twig"');
             }

@@ -117,6 +117,17 @@ class ConfigResolver
         return $this->appConfig;
     }
 
+
+    /**
+     * @param $key
+     *
+     * @return mixed
+     */
+    public function getAppConfigValue($key)
+    {
+        return isset($this->appConfig[$key]) ? $this->appConfig[$key] : NULL;
+    }
+
     /**
      * @return mixed
      */

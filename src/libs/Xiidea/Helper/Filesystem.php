@@ -88,11 +88,11 @@ class Filesystem {
 
     /**
      * @param string $d directory to search
-     * @param string $pre prepend the directory name to form unique controller name
+     * @param string $pre prepend the directory name to form unique file name
      * @param string $ext
      * @return array
      */
-    public static function scanForController($d="",$pre="", $ext = 'twig'){
+    public static function scanForFiles($d="",$pre="", $ext = 'twig'){
         $files = array();
         $dir=array();
         $more_files=array();
@@ -107,7 +107,7 @@ class Filesystem {
         }
         if(!empty($dir)){
             foreach($dir as $dname){
-                $more_files= array_merge(self::scanForController($d.DIRECTORY_SEPARATOR.$dname,"$dname/", $ext),$more_files);
+                $more_files= array_merge(self::scanForFiles($d.DIRECTORY_SEPARATOR.$dname,"$dname/", $ext),$more_files);
             }
 
         }
