@@ -62,4 +62,10 @@ Besides that here is the available list of CIX twig functions you can use. More 
 * valid_nonce - validate nonce value
 * logout_url - return logout url
 
+8. Assetic Bundle.
+---------------------------------------------
+Cix packed with [Assetic](https://github.com/kriswallsmith/assetic) Bundle for smart assets management. Run following command to dump assets files.
+
+    > php bin/cli assetic:dump
+
 *For full Twig reference, visit [Twig Site](http://twig.sensiolabs.org/)

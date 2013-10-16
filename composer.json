@@ -1,7 +1,7 @@
 {
     "name": "xiidea/codeigniter-extended",
     "license": "MIT",
-    "keywords": ["Codeigniter", "MY_Model", "ezRbac", "Extended", "Enhanced", "Twig"],
+    "keywords": ["Codeigniter", "CI_Base_Model", "ezRbac", "Extended", "Enhanced", "Twig"],
     "authors": [
         {
             "name": "Roni Saha",

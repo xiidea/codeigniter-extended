@@ -80,7 +80,7 @@ It comes pre-configured with the following libraries:
 
   * [EzRbac][2] Role Based Access Control Library
 
-  * [MY_Model][3] An extension of CodeIgniter's base Model class
+  * [CI_Base_Model][3] An extension of CodeIgniter's base Model class
 
   * Enhanced [Controller](./docs/controller.md) Library
 
@@ -97,5 +97,5 @@ It comes pre-configured with the following libraries:
 Enjoy!
 
 [1]:  http://getcomposer.org/
-[2]:  https://github.com/xiidea/ezRbac
-[3]:  https://github.com/ronisaha/MY_Model
+[2]:  http://xiidea.github.io/ezRbac
+[3]:  http://ronisaha.github.io/ci-base-model/
