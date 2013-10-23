@@ -32,6 +32,9 @@ class DumpCommand extends ConfigAwareCommand
             ->setName('assetic:dump')
             ->setDescription('Dumps all assets to the filesystem')
             ->addArgument('write_to', InputArgument::OPTIONAL, 'Override the configured asset root')
+            ->addOption('watch', null, InputOption::VALUE_NONE, 'Check for changes every second, debug mode only')
+            ->addOption('force', null, InputOption::VALUE_NONE, 'Force an initial generation of all assets (used with --watch)')
+            ->addOption('period', null, InputOption::VALUE_REQUIRED, 'Set the polling period in seconds (used with --watch)', 1)
         ;
     }
 
@@ -43,7 +46,9 @@ class DumpCommand extends ConfigAwareCommand
         $assetFactory = new AssetFactory($this->getConfig()->getAssetsBasePath(), $this->getConfig()->isDebug());
 
         $loader = new TwigFormulaLoader($this->twig());
-        $this->am = new LazyAssetManager($assetFactory, array('twig'=>$loader));
+        $this->am = new LazyAssetManager($assetFactory);
+        $assetFactory->setAssetManager($this->am);
+        $this->am->setLoader('twig', $loader);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -53,21 +58,109 @@ class DumpCommand extends ConfigAwareCommand
         $output->writeln(sprintf('Debug mode is <comment>%s</comment>.', $this->am->isDebug() ? 'on' : 'off'));
         $output->writeln('');
 
-        $templates = Filesystem::scanForFiles($this->getConfig()->getTwigBasePath(), '', 'twig');
+        $this->scanTemplates();
 
-        $loader   = $this->twig()->getLoader();
-
-
-        foreach ($templates as $template) {
-            $resource = new TwigResource($loader, $template);
-            $this->am->addResource($resource, 'twig');
-        }
-
-        foreach ($this->am->getNames() as $name) {
-            $this->dumpAsset($name, $output);
+        if (!$input->getOption('watch')) {
+            foreach ($this->am->getNames() as $name) {
+                $this->dumpAsset($name, $output);
+            }
+        } elseif (!$this->am->isDebug()) {
+            throw new \RuntimeException('The --watch option is only available in debug mode.');
+        } else {
+            $this->watch($input, $output);
         }
     }
 
+    private function scanTemplates()
+    {
+        $templates = Filesystem::scanForFiles($this->getConfig()->getTwigBasePath(), '', 'twig');
+        foreach ($templates as $template) {
+            $resource = new TwigResource($this->twig()->getLoader(), $template);
+            $this->am->addResource($resource, 'twig');
+        }
+    }
+
+    /**
+     * Watches the asset manager for changes.
+     *
+     * This method includes an infinite loop the continuously polls the asset
+     * manager for changes.
+     *
+     * @param InputInterface  $input  The command input
+     * @param OutputInterface $output The command output
+     */
+    private function watch(InputInterface $input, OutputInterface $output)
+    {
+        $cache = sys_get_temp_dir().'/assetic_watch_'.substr(sha1($this->basePath), 0, 7);
+        if ($input->getOption('force') || !file_exists($cache)) {
+            $previously = array();
+        } else {
+            $previously = unserialize(file_get_contents($cache));
+            if (!is_array($previously)) {
+                $previously = array();
+            }
+        }
+
+        $error = '';
+        while (true) {
+            try {
+                foreach ($this->am->getNames() as $name) {
+                    if ($this->checkAsset($name, $previously)) {
+                        $this->dumpAsset($name, $output);
+                    }
+                }
+
+               $this->resetAssetManager();
+
+                file_put_contents($cache, serialize($previously));
+                $error = '';
+            } catch (\Exception $e) {
+                if ($error != $msg = $e->getMessage()) {
+                    $output->writeln('<error>[error]</error> '.$msg);
+                    $error = $msg;
+                }
+            }
+
+            sleep($input->getOption('period'));
+        }
+    }
+
+    private function resetAssetManager()
+    {
+        $this->am->clear();
+        clearstatcache();
+        $this->am->load();
+    }
+
+    /**
+     * Checks if an asset should be dumped.
+     *
+     * @param string $name        The asset name
+     * @param array  &$previously An array of previous visits
+     *
+     * @return Boolean Whether the asset should be dumped
+     */
+    private function checkAsset($name, array &$previously)
+    {
+        $formula = $this->am->hasFormula($name) ? serialize($this->am->getFormula($name)) : null;
+        $asset = $this->am->get($name);
+
+        $mtime = 0;
+        foreach ($this->getAssetVarCombinations($asset) as $combination) {
+            $asset->setValues($combination);
+            $mtime = max($mtime, $this->am->getLastModified($asset));
+        }
+
+        if (isset($previously[$name])) {
+            $changed = $previously[$name]['mtime'] != $mtime || $previously[$name]['formula'] != $formula;
+        } else {
+            $changed = true;
+        }
+
+        $previously[$name] = array('mtime' => $mtime, 'formula' => $formula);
+
+        return $changed;
+    }
 
     /**
      * Writes an asset.
@@ -83,8 +176,9 @@ class DumpCommand extends ConfigAwareCommand
         $asset = $this->am->get($name);
         $formula = $this->am->getFormula($name);
 
-        // start by dumping the main asset
-        $this->doDump($asset, $output);
+        if($this->getConfig()->getEnv() != 'dev') {
+            $this->doDump($asset, $output);
+        }
 
         // dump each leaf if debug
         if (isset($formula[2]['debug']) ? $formula[2]['debug'] : $this->am->isDebug()) {
@@ -175,8 +269,7 @@ class DumpCommand extends ConfigAwareCommand
         if (class_exists('\Twig_Loader_Filesystem')) {
             $loader = new \Twig_Loader_Filesystem($this->getConfig()->getTwigBasePath());
             $this->_twig = new Loader($loader, array(
-                'debug' => $this->getConfig()->getEnvironment() != 'production',
-                'cache' => $this->getConfig()->getApplicationBasePath() . 'cache'
+                'debug' => $this->getConfig()->getEnv() != 'prod'
             ), new ProxyController, $this->getConfig()->getAppConfigValue('twig_extensions'));
         } else {
             show_error('Twig is not installed. Install Twig first by run the command "composer update twig/twig"');

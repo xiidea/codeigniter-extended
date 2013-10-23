@@ -6,7 +6,7 @@ use Xiidea\Helper\Filesystem;
 
 class ConfigResolver
 {
-    private $version = '1.0.1';
+    private $version = '1.2.0';
     private $root;
     private $webBasePath;
     private $assetsBasePath;
@@ -150,6 +150,17 @@ class ConfigResolver
         return self::$environment;
     }
 
+    public function getEnv()
+    {
+        $envArray = array(
+            'production' => 'prod',
+            'development' => 'dev',
+            'testing' => 'test'
+        );
+
+        return $envArray[$this->getEnvironment()];
+    }
+
     public function isDebug()
     {
         return $this->getEnvironment() == 'development';
@@ -176,8 +187,11 @@ class ConfigResolver
             case 'production':
                 $env = 'production';
                 break;
+            case 't':
             case 'test':
-                $env = 'test';
+            case 'testing':
+                $env = 'testing';
+                break;
             default:
                 $env = null;
         endswitch;
