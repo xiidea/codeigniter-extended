@@ -78,11 +78,16 @@ class ConfigResolver
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getApplicationBasePath()
     {
         return $this->applicationBasePath;
+    }
+
+    public function  getCacheDir()
+    {
+        return $this->applicationBasePath . 'cache' . DIRECTORY_SEPARATOR . $this->getEnv() . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -152,13 +157,18 @@ class ConfigResolver
 
     public function getEnv()
     {
+        return self::getShortEnv($this->getEnvironment());
+    }
+
+    public static function getShortEnv($env)
+    {
         $envArray = array(
             'production' => 'prod',
             'development' => 'dev',
             'testing' => 'test'
         );
 
-        return $envArray[$this->getEnvironment()];
+        return $envArray[$env];
     }
 
     public function isDebug()

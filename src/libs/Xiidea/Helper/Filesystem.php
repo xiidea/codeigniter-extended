@@ -126,4 +126,34 @@ class Filesystem {
             return false;
         }
     }
+
+    public function exists($path)
+    {
+       return file_exists($path);
+    }
+
+    public function remove($dir)
+    {
+        $it = new \RecursiveDirectoryIterator($dir);
+        $files = new \RecursiveIteratorIterator($it, \RecursiveIteratorIterator::CHILD_FIRST);
+
+        foreach($files as $file) {
+            if ($file->getFilename() === '.' || $file->getFilename() === '..') {
+                continue;
+            }
+            if ($file->isDir()){
+                rmdir($file->getRealPath());
+            } else {
+                unlink($file->getRealPath());
+            }
+        }
+
+        rmdir($dir);
+    }
+
+    public function clear($dir)
+    {
+        $this->remove($dir);
+        mkdir($dir, 0, true);
+    }
 }

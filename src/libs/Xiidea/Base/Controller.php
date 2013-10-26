@@ -2,6 +2,7 @@
 
 namespace Xiidea\Base;
 
+use Xiidea\Helper\ConfigResolver;
 use Xiidea\Twig\Dummy;
 use Xiidea\Twig\Loader;
 
@@ -174,11 +175,13 @@ class Controller extends \CI_Controller
 
             $extensions = $this->config->item('twig_extensions');
 
+            $env = ConfigResolver::getShortEnv(ENVIRONMENT);
+
             if (class_exists('\Twig_Loader_Filesystem')) {
                 $loader = new \Twig_Loader_Filesystem($templatesPath);
                 $this->_twig = new Loader($loader, array(
-                                                    'debug' => ENVIRONMENT != 'production',
-                                                    'cache' => APPPATH . 'cache'
+                                                    'debug' => $env != 'prod',
+                                                    'cache' => APPPATH . 'cache' . DIRECTORY_SEPARATOR . $env
                                                     ), $this, $extensions);
             } else {
                 show_error('Twig is not installed. Install Twig first by run the command "composer update twig/twig"');
