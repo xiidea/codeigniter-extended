@@ -37,7 +37,7 @@
         "twig/twig": "1.*",
         "swiftmailer/swiftmailer": "v5.0.1",
         "xiidea/ezrbac": "1.2.*@dev",
-        "xiidea/ci-base-model": "2.0.*",
+        "xiidea/ci-base-model": "2.1.*",
         "kriswallsmith/assetic": "1.2.*@dev",
         "symfony/console": "2.4.*@dev"
     },
@@ -63,7 +63,7 @@
             "src/application/third_party/{$name}": ["type:codeigniter-third-party"]
         },
         "branch-alias": {
-            "dev-master": "0.1.x-dev"
+            "dev-master": "1.1.x-dev"
         }
     },
     "variables": {
