@@ -25,7 +25,7 @@ If you want some [customization](./docs/customization.md), first make it in the 
 
 if you like to install with all the default configuration settings you may just run the following command
 
-    php composer.phar create-project xiidea/codeigniter-extended path/ 1.0.1
+    php composer.phar create-project xiidea/codeigniter-extended path/ 1.1.0
 
 Composer will install Codeigniter2 and all the dependencies under the working directory. And ask you for some configuration values.
 
