@@ -104,8 +104,22 @@ class DataBase
                 continue;
             }
 
-            mysql_query($query) or $error[] = mysql_error();
+            mysql_query($this->addTablePrefix($query)) or $error[] = mysql_error();
         }
+    }
+
+    private function addTablePrefix($query)
+    {
+        if (empty(self::$config['dbprefix'])) {
+            return $query;
+        }
+
+        return preg_replace(
+            '/(insert  into|for the table|for table|CREATE TABLE|DROP TABLE IF EXISTS) `([\w]+)`/',
+            '${1} `' . self::$config['dbprefix'] .'${2}`',
+            $query
+        );
+
     }
 
     function splitQueryText($query)
