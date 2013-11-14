@@ -53,17 +53,17 @@ class Controller extends \CI_Controller
 {
 
     protected $_layout = 'main';
+    protected $_method = null;
+
     private $_isAjaxRequest = false;
     private $_twig = null;
     private $_twigPath = null;
-    private $_method = null;
-    public $twig;
 
     function __construct()
     {
         parent::__construct();
         $this->_method = $this->router->fetch_method();
-        $this->_restrictFromRouter();
+        $this->_restrictFromRouter(__CLASS__);
 
         $this->_isAjaxRequest = ($this->input->get('ajax') || $this->input->is_ajax_request());
     }
@@ -237,9 +237,9 @@ class Controller extends \CI_Controller
         show_error($msg, $code, $header);
     }
 
-    private function _restrictFromRouter()
+    protected function _restrictFromRouter($class)
     {
-        if(in_array($this->_method, get_class_methods(__CLASS__))){
+        if (in_array($this->_method, get_class_methods($class))) {
             $this->show_error(null, 404);
         }
     }

@@ -63,12 +63,7 @@
             "src/application/third_party/{$name}": ["type:codeigniter-third-party"]
         },
         "branch-alias": {
-            "dev-master": "1.1.x-dev"
+            "dev-master": "1.2.x-dev"
         }
-    },
-    "variables": {
-        "ci.package.name": "ellislab/codeigniter",
-        "ci.app.dir": "src/application",
-        "ci.web.dir": "web"
     }
 }
