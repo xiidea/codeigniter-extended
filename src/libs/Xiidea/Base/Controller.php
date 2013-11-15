@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the CIX package.
+ *
+ * (c) Roni Saha <roni.cse@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Xiidea\Base;
 
 use Xiidea\Helper\ConfigResolver;
@@ -7,6 +16,16 @@ use Xiidea\Twig\Dummy;
 use Xiidea\Twig\Loader;
 
 /**
+ * CodeIgniter-Extended Application Controller Class
+ *
+ * This class object is the super class that every library in
+ * CodeIgniter-Extended will be assigned to.
+ *
+ * @package		CodeIgniter-Extended
+ * @subpackage	Libraries
+ * @category	Libraries
+ * @author		Roni Saha <roni.cse@gmail.com>
+ *
  * @property \CI_DB_active_record $db
  * @property \CI_DB_forge $dbforge
  * @property \CI_Benchmark $benchmark

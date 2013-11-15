@@ -1,10 +1,27 @@
 <?php
 
+/*
+ * This file is part of the CIX package.
+ *
+ * (c) Roni Saha <roni.cse@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Xiidea\Base;
 
 use Xiidea\l10n\POMO\MO;
 use Xiidea\l10n\Translations\NOOP;
 
+/**
+ * Language Class
+ *
+ * @package		CodeIgniter-Extended
+ * @subpackage	Libraries
+ * @category	Language
+ * @author		Roni Saha <roni.cse@gmail.com>
+ */
 class Lang extends \CI_Lang {
 
     protected $languages = array(

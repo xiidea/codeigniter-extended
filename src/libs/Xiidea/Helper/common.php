@@ -1,10 +1,14 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: Roni
- * Date: 3/20/12
- * Time: 4:20 PM
+
+/*
+ * This file is part of the CIX package.
+ *
+ * (c) Roni Saha <roni.cse@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
+
 function __t($string, $domain = FALSE)
 {
     echo _t($string, $domain);

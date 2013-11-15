@@ -1,12 +1,15 @@
 <?php
-/**
- * @Author: Roni Kumar Saha
- *        Date: 7/17/13
- *        Time: 3:33 PM
+
+/*
+ * This file is part of the CIX package.
+ *
+ * (c) Roni Saha <roni.cse@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Xiidea\Twig;
-
 
 use Assetic\Extension\Twig\AsseticExtension;
 use Assetic\Factory\AssetFactory;
@@ -23,11 +26,11 @@ class Loader extends \Twig_Environment
     private $assetFactory;
     private $_extensions;
 
-    public function __construct(\Twig_LoaderInterface $loader = NULL, $options = array(), $ci = null, $extensions = array())
+    public function __construct(\Twig_LoaderInterface $loader = NULL, $options = array(), $ci = NULL, $extensions = array())
     {
         parent::__construct($loader, $options);
 
-        $this->CI = $ci == null ? get_instance() : $ci;
+        $this->CI = $ci == NULL ? get_instance() : $ci;
 
         $this->_extensions = $extensions;
 
@@ -72,7 +75,7 @@ class Loader extends \Twig_Environment
      */
     public function render($name, array $context = array())
     {
-        $name = $this->CI->getTwigTemplateName($name);
+        $name                = $this->CI->getTwigTemplateName($name);
         $context['__FILE__'] = $this->CI->getTwigPath($name);
 
         return $this->loadTemplate($name)->render($context);

@@ -1,10 +1,12 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: Only For Me
- * Date: 10/10/13
- * Time: 8:17 AM
- * To change this template use File | Settings | File Templates.
+
+/*
+ * This file is part of the CIX package.
+ *
+ * (c) Roni Saha <roni.cse@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 use Symfony\Component\Console\Application;

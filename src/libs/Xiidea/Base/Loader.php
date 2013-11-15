@@ -1,10 +1,27 @@
 <?php
 
-namespace Xiidea\Base;
+/*
+ * This file is part of the CIX package.
+ *
+ * (c) Roni Saha <roni.cse@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
 
+namespace Xiidea\Base;
+/**
+ * Loader Class
+ *
+ * Loads views and files
+ *
+ * @package		CodeIgniter-Extended
+ * @subpackage	Libraries
+ * @category	Loader
+ * @author		Roni Saha <roni.cse@gmail.com>
+ */
 class Loader extends \CI_Loader
 {
-
     protected $CI;
 
     public function __construct()

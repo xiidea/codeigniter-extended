@@ -2,8 +2,6 @@
 
 namespace Xiidea\Helper;
 
-use Xiidea\Helper\Filesystem;
-
 class ConfigResolver
 {
     private $version = '1.2.0';
@@ -15,7 +13,6 @@ class ConfigResolver
     private $applicationBasePath;
     private $appConfig;
     private static $environment;
-
 
     public function __construct($env = null)
     {

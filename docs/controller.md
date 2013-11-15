@@ -101,7 +101,7 @@ Controller implementing Api may looks like follow:
             $this->sendResponse(200, json_encode(array('name'=>'Name of user')));
         }
 
-        public function dump_post(){
+        public function user_post(){
             $this->sendResponse(200, json_encode(array('success'=>true, 'msg'=>'user created')));
         }
 

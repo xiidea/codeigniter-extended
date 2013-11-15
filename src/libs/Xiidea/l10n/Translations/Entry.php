@@ -1,24 +1,29 @@
 <?php
-/**
- * @Author: Roni Kumar Saha
- * Date: 7/16/13
- * Time: 11:40 AM
+
+/*
+ * This file is part of the CIX package.
+ *
+ * (c) Roni Saha <roni.cse@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Xiidea\l10n\Translations;
 
-class Entry {
+class Entry
+{
 
     /**
      * Whether the entry contains a string and its plural form, default is false
      *
      * @var boolean
      */
-    var $is_plural = false;
+    var $is_plural = FALSE;
 
-    var $context = null;
-    var $singular = null;
-    var $plural = null;
+    var $context = NULL;
+    var $singular = NULL;
+    var $plural = NULL;
     var $translations = array();
     var $translator_comments = '';
     var $extracted_comments = '';
@@ -27,16 +32,17 @@ class Entry {
 
     /**
      * @param array $args associative array, support following keys:
-     * 	- singular (string) -- the string to translate, if omitted and empty entry will be created
-     * 	- plural (string) -- the plural form of the string, setting this will set {@link $is_plural} to true
-     * 	- translations (array) -- translations of the string and possibly -- its plural forms
-     * 	- context (string) -- a string differentiating two equal strings used in different contexts
-     * 	- translator_comments (string) -- comments left by translators
-     * 	- extracted_comments (string) -- comments left by developers
-     * 	- references (array) -- places in the code this strings is used, in relative_to_root_path/file.php:linenum form
-     * 	- flags (array) -- flags like php-format
+     *                    - singular (string) -- the string to translate, if omitted and empty entry will be created
+     *                    - plural (string) -- the plural form of the string, setting this will set {@link $is_plural} to true
+     *                    - translations (array) -- translations of the string and possibly -- its plural forms
+     *                    - context (string) -- a string differentiating two equal strings used in different contexts
+     *                    - translator_comments (string) -- comments left by translators
+     *                    - extracted_comments (string) -- comments left by developers
+     *                    - references (array) -- places in the code this strings is used, in relative_to_root_path/file.php:linenum form
+     *                    - flags (array) -- flags like php-format
      */
-    public function __construct($args=array()) {
+    public function __construct($args = array())
+    {
         // if no singular -- empty object
         if (!isset($args['singular'])) {
             return;
@@ -45,7 +51,7 @@ class Entry {
         foreach ($args as $varname => $value) {
             $this->$varname = $value;
         }
-        if (isset($args['plural'])) $this->is_plural = true;
+        if (isset($args['plural'])) $this->is_plural = TRUE;
         if (!is_array($this->translations)) $this->translations = array();
         if (!is_array($this->references)) $this->references = array();
         if (!is_array($this->flags)) $this->flags = array();
@@ -56,16 +62,18 @@ class Entry {
      *
      * @return string|bool the key or false if the entry is empty
      */
-    public function key() {
-        if (is_null($this->singular)) return false;
+    public function key()
+    {
+        if (is_null($this->singular)) return FALSE;
         // prepend context and EOT, like in MO files
-        return is_null($this->context)? $this->singular : $this->context.chr(4).$this->singular;
+        return is_null($this->context) ? $this->singular : $this->context . chr(4) . $this->singular;
     }
 
-    public function merge_with(&$other) {
-        $this->flags = array_unique( array_merge( $this->flags, $other->flags ) );
-        $this->references = array_unique( array_merge( $this->references, $other->references ) );
-        if ( $this->extracted_comments != $other->extracted_comments ) {
+    public function merge_with(&$other)
+    {
+        $this->flags      = array_unique(array_merge($this->flags, $other->flags));
+        $this->references = array_unique(array_merge($this->references, $other->references));
+        if ($this->extracted_comments != $other->extracted_comments) {
             $this->extracted_comments .= $other->extracted_comments;
         }
 

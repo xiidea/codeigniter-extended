@@ -1,26 +1,34 @@
 <?php
-/**
- * @Author: Roni Kumar Saha
- *        Date: 9/7/13
- *        Time: 7:45 AM
+
+/*
+ * This file is part of the CIX package.
+ *
+ * (c) Roni Saha <roni.cse@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Xiidea\Installer\Services;
 
+/**
+ * Database Class
+ *
+ * @package		CodeIgniter-Extended
+ * @subpackage	Libraries
+ * @category	Libraries
+ * @author		Roni Saha <roni.cse@gmail.com>
+ */
 
 class DataBase
 {
-
     private static $connection;
-
     private static $config;
     private static $connectionError;
-
     private static $newDatabase = FALSE;
 
     public function __construct($dbConfig = array())
     {
-
         self::connect($dbConfig);
     }
 

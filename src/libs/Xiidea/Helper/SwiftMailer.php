@@ -1,11 +1,24 @@
 <?php
-/**
- * @Author: Roni Kumar Saha
- * Date: 12/31/12
- * Time: 1:01 PM
+
+/*
+ * This file is part of the CIX package.
+ *
+ * (c) Roni Saha <roni.cse@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Xiidea\Helper;
+
+/**
+ * Wrapper Class For Swift_Mailer Library
+ *
+ * @package		CodeIgniter-Extended
+ * @subpackage	Libraries
+ * @category	Wrapper Libraries
+ * @author		Roni Saha <roni.cse@gmail.com>
+ */
 
 class SwiftMailer
 {
