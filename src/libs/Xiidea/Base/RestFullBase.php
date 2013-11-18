@@ -11,46 +11,20 @@
 
 namespace Xiidea\Base;
 /**
- * CodeIgniter-Extended Application Controller Class For RestFull Request
- *
- * This class object is the super class that every library in
- * CodeIgniter-Extended will be assigned to.
+ * CodeIgniter-Extended Application Controller Base Class For RestFull Request
  *
  * @package		CodeIgniter-Extended
  * @subpackage	Libraries
  * @category	Libraries
  * @author		Roni Saha <roni.cse@gmail.com>
  */
-class RestFullController extends Controller
+class RestFullBase extends Controller
 {
 
     function __construct()
     {
         parent::__construct();
         $this->_restrictFromRouter(__CLASS__);
-        $this->_re_route();
-    }
-
-    public function _remap($method, $arguments)
-    {
-        try {
-            call_user_func_array(array($this, $this->router->fetch_method()), $arguments);
-        }
-        catch (\Exception $e) {
-            $this->sendResponse(404);
-        }
-    }
-
-    private function _re_route()
-    {
-        $requestMethod = strtolower($_SERVER['REQUEST_METHOD']);
-        $controllerMethod = $this->_method . '_' . $requestMethod;
-
-        if (!is_callable(array($this, $controllerMethod))) {
-            $this->sendResponse(404);
-        }
-
-        $this->router->set_method($controllerMethod);
     }
 
     public function sendResponse($status = 200, $body = null, $content_type = 'application/json')
@@ -87,4 +61,4 @@ class RestFullController extends Controller
 }
 
 /* End of file RestFullController.php */
-/* Location: ./Xiidea/Base/RestController.php */
+/* Location: ./Xiidea/Base/RestFullBase.php */

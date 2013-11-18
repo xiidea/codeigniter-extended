@@ -79,39 +79,79 @@ If you like to render using Twig you can use the following codes:
 For default template system, Creating layout is same task as create a view file. Create a view file into **{APPDIR}/view/_layouts** like other view files. Then You just need to echo the $content variable where you like to display the partial view within the layout.
 If you are using the twig template engine, then follow the [twig instruction](./twig.md).
 
-6. RestFullController:
+6. RestFullApiController:
 ----------------------
-A base controller for implementing Rest Api. All controller those serve rest api should extend it instead of CIX_Controller or CI_Controller. A sample
+A base controller for implementing Restful Api. All controller those serve restful api should extend it instead of CIX_Controller or CI_Controller. A sample
 Controller implementing Api may looks like follow:
 
 ```php
+use \Xiidea\Base\RestFullApiController as BaseController;
 
-    class Api extends \Xiidea\Base\RestFullController {
+class Api extends BaseController {
 
-        public function access_map(){
-            return array(
-                'user_get'=>'view',
-                'user_post'=>'create',
-                'user_put'=>'edit',
-                'user_delete'=>'delete',
-            );
-        }
-
-        public function user_get(){
-            $this->sendResponse(200, json_encode(array('name'=>'Name of user')));
-        }
-
-        public function user_post(){
-            $this->sendResponse(200, json_encode(array('success'=>true, 'msg'=>'user created')));
-        }
-
-        public function user_put(){
-            $this->sendResponse(200, json_encode(array('success'=>true, 'msg'=>'user updated')));
-        }
-
-        public function user_delete(){
-            $this->sendResponse(200, json_encode(array('success'=>true, 'msg'=>'user deleted')));
-        }
+    public function user_get(){
+        $this->sendResponse(200, json_encode(array('name'=>'Name of user')));
     }
+
+    public function user_post(){
+        $this->sendResponse(200, json_encode(array('success'=>true, 'msg'=>'user created')));
+    }
+
+    public function user_put(){
+        $this->sendResponse(200, json_encode(array('success'=>true, 'msg'=>'user updated')));
+    }
+
+    public function user_delete(){
+        $this->sendResponse(200, json_encode(array('success'=>true, 'msg'=>'user deleted')));
+    }
+}
+
+```
+
+6. RestFullResourceController:
+----------------------
+A base controller for implementing Restful Api for an resource entity. All controller those serve restful api resource, should extend it instead of CIX_Controller or CI_Controller or RestFullApiController. A sample
+Controller implementing Users resource api may looks like follow:
+
+```php
+use \Xiidea\Base\RestFullResourceController as BaseController;
+
+class Users extends BaseController {
+
+    public function index()
+    {
+        $this->sendResponse(200, json_encode(array('success'=>true, 'msg'=>'user list page on get request /users')));
+    }
+
+    public function show()
+    {
+        $this->sendResponse(200, json_encode(array('success'=>true, 'msg'=>'view single resource on get /users/1')));
+    }
+
+    public function create()
+    {
+        $this->sendResponse(200, json_encode(array('success'=>true, 'msg'=>'create on post /users')));
+    }
+
+    public function edit()
+    {
+        $this->sendResponse(200, json_encode(array('success'=>true, 'msg'=>'edit form on get /users/1/edit')));
+    }
+
+    public function update()
+    {
+        $this->sendResponse(200, json_encode(array('success'=>true, 'msg'=>'update on put /users/1')));
+    }
+
+    public function delete()
+    {
+        $this->sendResponse(200, json_encode(array('success'=>true, 'msg'=>'delete on delete request /users/1')));
+    }
+
+    public function create_new()
+    {
+        $this->sendResponse(200, json_encode(array('success'=>true, 'msg'=>'new form for /users/new')));
+    }
+}
 
 ```
