@@ -429,7 +429,7 @@ class CixRequirements extends RequirementCollection
                 is_dir($applicationDir),
                 'Application must be installed',
                 'Application is missing.' .
-                '<br> Run "<strong>php composer.phar update</strong>" to install application.'
+                '<br> Run "<strong>php composer.phar install</strong>" to install application.'
             );
         }
 

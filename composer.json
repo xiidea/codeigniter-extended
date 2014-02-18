@@ -57,8 +57,8 @@
         "use-twig": true,
         "use-swift-mailer": true,
         "ci-app-dir": "src/application",
-        "ci-package-name": "ellislab/codeigniter",
         "ci-web-dir": "web",
+        "ci-package-name": "ellislab/codeigniter",
         "installer-paths": {
             "src/application/third_party/{$name}": ["type:codeigniter-third-party"]
         },
