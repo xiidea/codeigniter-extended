@@ -21,7 +21,7 @@ if ('\\' == DIRECTORY_SEPARATOR) {
     echo "*  (especially on the Windows platform)\n";
 }
 echo "*  To be on the safe side, please also launch the requirements check\n";
-echo "*  from your web server using the web/config.php script.\n";
+echo "*  from your web server using the web/check.php script.\n";
 
 echo_title('Mandatory requirements');
 
