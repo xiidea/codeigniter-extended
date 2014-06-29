@@ -78,11 +78,6 @@ class RestFullResourceController extends RestFullBase
         }
     }
 
-    private function _parse_routes(){
-        // Loop through the route array looking for wild-cards
-
-    }
-
     private function createRestFullRoute()
     {
         $class = strtolower(get_class($this));

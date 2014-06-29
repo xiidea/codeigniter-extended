@@ -18,7 +18,7 @@ namespace Xiidea\Base;
  * @category	Libraries
  * @author		Roni Saha <roni.cse@gmail.com>
  */
-class RestFullBase extends Controller
+class RestFullBase extends \CI_Controller
 {
 
     function __construct()
@@ -56,6 +56,27 @@ class RestFullBase extends Controller
             }
 
             $this->show_error($message, $status);
+        }
+    }
+
+    public function show_error($msg = null, $code = null, $header = null)
+    {
+        if ($this->_isAjaxRequest) {
+            $msg = json_encode(array('success' => false, 'msg' => $msg));
+            set_status_header($code);
+            die($msg);
+        }
+        if ($code == 404) {
+            show_404();
+        }
+
+        show_error($msg, $code, $header);
+    }
+
+    protected function _restrictFromRouter($class)
+    {
+        if (in_array($this->_method, get_class_methods($class))) {
+            $this->show_error(null, 404);
         }
     }
 }

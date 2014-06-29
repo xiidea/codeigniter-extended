@@ -11,7 +11,8 @@
 
 namespace Xiidea\Twig;
 
-class TwigCIXExtension extends \Twig_Extension{
+class TwigCIXExtension extends \Twig_Extension
+{
 
     /**
      * @var \CI_Controller
