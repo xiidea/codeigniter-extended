@@ -90,6 +90,8 @@ It comes pre-configured with the following libraries:
 
   * Enhanced Language Library(gettext localization implementation)
 
+  * You can use the PHP built-in web server to run CIX application
+
   * JS/CSS Minifier. you can use (<code>assets/css/mini.php?files=file1,file2</code> and <code>assets/js/mini.php?files=file1,file2</code>)   
     or (<code>assets/css/file1,file2,file3.css</code> and <code>assets/js/file1,file2.js</code> with rewrite enable)
 

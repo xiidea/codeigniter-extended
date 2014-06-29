@@ -23,9 +23,9 @@
             "type": "package",
             "package": {
                 "name": "ellislab/codeigniter",
-                "version": "2.1-stable",
+                "version": "2.2-stable",
                 "dist": {
-                    "url": "https://github.com/EllisLab/CodeIgniter/archive/2.1-stable.zip",
+                    "url": "https://github.com/EllisLab/CodeIgniter/archive/2.2-stable.zip",
                     "type": "zip"
                 }
             }
@@ -33,13 +33,14 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "ellislab/codeigniter": "2.1-stable",
+        "ellislab/codeigniter": "2.2-stable",
         "twig/twig": "1.*",
         "swiftmailer/swiftmailer": "v5.0.1",
         "xiidea/ezrbac": "1.2.*@dev",
         "xiidea/ci-base-model": "2.1.*",
         "kriswallsmith/assetic": "1.2.*@dev",
-        "symfony/console": "2.4.*@dev"
+        "symfony/console": "2.6.*@dev",
+        "symfony/process": "2.6.*@dev"
     },
 
     "scripts": {
@@ -63,7 +64,7 @@
             "src/application/third_party/{$name}": ["type:codeigniter-third-party"]
         },
         "branch-alias": {
-            "dev-master": "1.2.x-dev"
+            "dev-master": "1.3.x-dev"
         }
     }
 }
