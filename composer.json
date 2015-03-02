@@ -25,7 +25,7 @@
                 "name": "ellislab/codeigniter",
                 "version": "2.2-stable",
                 "dist": {
-                    "url": "https://github.com/EllisLab/CodeIgniter/archive/2.2-stable.zip",
+                    "url": "https://github.com/bcit-ci/CodeIgniter/archive/2.2-stable.zip",
                     "type": "zip"
                 }
             }
@@ -35,12 +35,12 @@
         "php": ">=5.3.3",
         "ellislab/codeigniter": "2.2-stable",
         "twig/twig": "1.*",
-        "swiftmailer/swiftmailer": "v5.0.1",
-        "xiidea/ezrbac": "1.2.*@dev",
+        "swiftmailer/swiftmailer": "5.3.*",
+        "xiidea/ezrbac": "1.2.*",
         "xiidea/ci-base-model": "2.1.*",
-        "kriswallsmith/assetic": "1.2.*@dev",
-        "symfony/console": "2.6.*@dev",
-        "symfony/process": "2.6.*@dev"
+        "kriswallsmith/assetic": "1.2.*",
+        "symfony/console": "2.6.*",
+        "symfony/process": "2.6.*"
     },
 
     "scripts": {
