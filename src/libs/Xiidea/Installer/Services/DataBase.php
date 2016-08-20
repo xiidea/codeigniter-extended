@@ -47,10 +47,10 @@ class DataBase
         if (!self::$connection) {
             self::$connectionError = "";
             self::$config          = $dbConfig;
-            self::$connection      = @mysql_connect(self::$config['hostname'],
+            self::$connection      = @mysqli_connect(self::$config['hostname'],
                                                     self::$config['username'],
                                                     self::$config['password'])
-                                                or (self::$connectionError = mysql_error() and FALSE);
+                                                or (self::$connectionError = mysqli_error(self::$connection) and FALSE);
 
         }
     }
@@ -61,7 +61,7 @@ class DataBase
             return FALSE;
         }
 
-        mysql_query("CREATE DATABASE `$dbName`", self::$connection);
+        mysqli_query(self::$connection, "CREATE DATABASE `$dbName`");
         self::$newDatabase = TRUE;
         return self::select($dbName);
     }
@@ -73,7 +73,7 @@ class DataBase
 
     private static function select($db, $create = FALSE)
     {
-        return self::$connection and mysql_select_db($db, self::$connection) or ($create and self::create($db));
+        return self::$connection and mysqli_select_db(self::$connection, $db) or ($create and self::create($db));
     }
 
     public function selectDB($db, $create = FALSE)
@@ -88,7 +88,7 @@ class DataBase
 
     public function checkTable($table)
     {
-        return (mysql_num_rows(mysql_query("SHOW TABLES LIKE '" . $table . "'")) == 1);
+        return (mysqli_num_rows(mysqli_query(self::$connection, "SHOW TABLES LIKE '" . $table . "'")) == 1);
     }
 
     public function parseMysqlDump($url)
@@ -112,7 +112,7 @@ class DataBase
                 continue;
             }
 
-            mysql_query($this->addTablePrefix($query)) or $error[] = mysql_error();
+            mysqli_query(self::$connection, $this->addTablePrefix($query)) or $error[] = mysqli_error(self::$connection);
         }
     }
 
